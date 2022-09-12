@@ -1,0 +1,86 @@
+* {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  height: 100%;
+  background: #f7faf7;
+}
+
+.App {
+  width: 90%;
+  min-height: 100vh;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #aeb3ad;
+
+  .headButtons {
+      width: 200px;
+      display: flex;
+      justify-content: space-between;
+  
+      button {
+        border: none;
+        padding: 8px 15px;
+        border-radius: 13px;
+        color: #ffffff;
+        font-weight: 700;
+        cursor: pointer;
+      
+        &:hover {
+          box-shadow: 1px 2px 20px rgba(0, 0, 0, 0.09);
+          background: darken($color: #000000, $amount: 0.1)
+        }
+      }
+
+      .add {
+        background: #5cb85c;
+      }
+
+      .massDelete {
+        background: #d9534f;
+      }
+
+  }
+}
+
+.bodyPage{
+  height: auto;
+  display: flex;
+  flex: 1 1 auto;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: start;
+
+  .wrapper {
+    max-width: 100%;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+  }
+}
+
+.footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  margin-top: 20px;
+  border-top: 2px solid #aeb3ad;
+}
