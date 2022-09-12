@@ -1,2 +1,1 @@
-# scandi-app
-scandi-app
+My first app
