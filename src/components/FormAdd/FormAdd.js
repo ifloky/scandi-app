@@ -39,8 +39,6 @@ function Card(props) {
     let option = e.target.value;
     setSelectActive(option);
   }
-
-
   
   return (
     <div className={styles.form}>
