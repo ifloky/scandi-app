@@ -5,26 +5,9 @@ function Card(props) {
 
   const [isChecked, setChecked] = React.useState(false);
 
-
   const onCheckItem = () => {
-    props.onBut(props.id)
-    setChecked(!isChecked)
-  }
-
-  
-  const massDel = () => {
-    //for(let i=1, n=itemsDel.length; i<n; i++) {
-    //  let idItem = itemsDel[i].id;
-    //  try{
-    //    console.log("удалить")
-    //    fetch(`https://62f65180612c13062b4ba68a.mockapi.io/items/${idItem}`, {
-    //            method: "DELETE",
-    //        });
-    //    } catch (err) {
-    //      console.log('delete:' + err);
-    //    }
-    //}
-    console.log(Card.key);
+    props.onBut(props);
+    setChecked(!isChecked);
   }
 
   return (

@@ -8,16 +8,16 @@ function App() {
 
   const [items, setItems] =React.useState([]);
   const [itemsDel, setItemsDel] =React.useState([]);
-  const [isAdded, setAdded] = React.useState(true);
+  const [isAdd, setAdded] = React.useState(true);
   
-
+console.log('test');
   React.useEffect(() => {
     return () => {
       fetch('https://62f65180612c13062b4ba68a.mockapi.io/items')
       .then((response) => { return response.json() })
       .then((data) => setItems(data))
     }
-  }, []);
+  }, [isAdd]);
 
   //const listItems = [
   //  //{sku: "1fd11", name: 'Compact Disc "ACME"', price: 333, srcImg: "img/acme.jpeg", specValue: 'Special Value'},
@@ -34,31 +34,33 @@ function App() {
   //  //{sku: "7A42", name: 'Soft chair "Lux"', price: 333, srcImg: "img/chair.jpg", specValue: 'Special Value'},
   //]
 
-  const add = (items) => {
-    if (!isAdded) {
-      setAdded(true);
-    } else {
-      setAdded(false)
-    }
+  const add = () => {
+    setAdded(!isAdd);
   }
 
   const deleteItem = (obj) => {
-    setItemsDel([...itemsDel,obj]);
+    const findItem = itemsDel.find((item) => Number(obj) === Number(item));
+    if (!findItem){
+      setItemsDel((prev) => [...prev,obj]);
+    } else {
+      setItemsDel((prev) => prev.filter((item) => Number(obj) !== Number(item)));
+    }
   }
 
-    const massDel = () => {
+  const massDel = () => {
     for (let i=0, n=itemsDel.length; i<n; i++) {
       let itemId = itemsDel[i];
       console.log(itemId);
       fetch(`https://62f65180612c13062b4ba68a.mockapi.io/items/${itemId}`, {method:'DELETE'})
+      setItems((prev) => prev.filter((item)=>item.id !== itemId));
     }
   } 
-
+      
   return (
     <div className="App">
       <header className="header">
-        <h1 className="namePage">{ isAdded ? 'Product List' : 'Product Add' }</h1>
-        { isAdded ?  
+        <h1 className="namePage">{ isAdd ? 'Product List' : 'Product Add' }</h1>
+        { isAdd ?  
           <div className="headButtons">
             <button className="add" onClick={add}>ADD</button>
             <button className="massDelete" onClick={massDel}>MASS DELETE</button>
@@ -72,7 +74,7 @@ function App() {
       <section className="bodyPage">
         <div className="wrapper">
         {
-          isAdded ? items.map((item) => (
+          isAdd ? items.map((item) => (
             <Card
               key={item.id}
               srcImg={item.srcImg}
@@ -80,13 +82,14 @@ function App() {
               name={item.name}
               price={item.price}
               specValue={item.specValue}
-              onBut={(obj) => deleteItem(item.id)}
+              onBut={(obj) => {deleteItem(item.id)}}
+              itemsDel={itemsDel}
             /> 
           )) : <FormAdd />
         }
         </div>
       </section>
-      
+
       <footer className="footer">
         <h3 className="footerText">Test assignment</h3>
       </footer>

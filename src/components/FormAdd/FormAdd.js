@@ -15,25 +15,33 @@ function Card(props) {
     mode:"onBlur"
   });
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     let dataSend = JSON.stringify(data);
     console.log(dataSend);
+    try {
+      const response = await fetch('https://62f65180612c13062b4ba68a.mockapi.io/items', {
+        method: 'post', // или 'PUT'
+        body: dataSend, // данные могут быть 'строкой' или {объектом}!
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+      const json = await response.json();
+      console.log('Успех:', JSON.stringify(json));
+    } catch (error) {
+      console.error('Ошибка:', error);
+    }
+
     reset();
   };
 
   let setSelect = (e) => {
     let option = e.target.value;
-    if(option === 'DVD') { 
-      setSelectActive(option);
-    } else  if(option === 'Furniture') { 
-      setSelectActive(option);
-    } else  if(option === 'Book') { 
-      setSelectActive(option);
-    } else {
-      setSelectActive('Set type item');
-    }
+    setSelectActive(option);
   }
 
+
+  
   return (
     <div className={styles.form}>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -71,30 +79,50 @@ function Card(props) {
         </div>
         { isSelect === 'DVD' ? 
             <div id='DVD' className={styles.dvd}>
-              <label htmlFor="size">Size (MB)</label>
-              <input type="text"  name="size"/>
+              <label htmlFor="specValue" >Size (MB)</label>
+              <input type="text" name="specValue"
+                {...register("specValue", {
+                  required: "Поле обязательно к заполнению"
+                })}
+              />
             </div> : <span></span>
         }
         { isSelect === 'Furniture' ?
             <div id='Furniture' className={styles.furniture}>
               <div>
                 <label htmlFor="height">Height (CM)</label>
-                <input type="text"  name="height"/>
+                <input type="text"  name="height"
+                  {...register("specValue", {
+                  required: "Поле обязательно к заполнению"
+                })}
+                />
               </div>
               <div>
                 <label htmlFor="width">Width (CM)</label>
-                <input type="text"  name="width"/>
+                <input type="text"  name="width"
+                  {...register("specValue", {
+                  required: "Поле обязательно к заполнению"
+                })}
+                />
               </div>
               <div> 
                 <label htmlFor="length">Length (CM)</label>
-                <input type="text"  name="length"/>
+                <input type="text"  name="length"
+                  {...register("specValue", {
+                  required: "Поле обязательно к заполнению"
+                })}
+                />
               </div>
             </div> : <span></span>
         }
         { isSelect === 'Book' ?
               <div id='book' className={styles.book}>
                 <label htmlFor="weight">Weight (KG)</label>
-                <input type="text"  name="weight"/>
+                <input type="text"  name="weight"
+                  {...register("specValue", {
+                  required: "Поле обязательно к заполнению"
+                })}
+                />
               </div> : <span></span>
         }
         <input type="submit"  name="submit" value='submit'/>
